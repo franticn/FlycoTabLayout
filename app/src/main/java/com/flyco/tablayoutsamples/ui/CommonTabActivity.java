@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -155,6 +156,14 @@ public class CommonTabActivity extends AppCompatActivity {
                     mTabLayout_2.showMsg(0, mRandom.nextInt(100) + 1);
 //                    UnreadMsgUtils.show(mTabLayout_2.getMsgView(0), mRandom.nextInt(100) + 1);
                 }
+            }
+        });
+        mTabLayout_2.setOnInterceptTabClickListener(new CommonTabLayout.OnInterceptTabClickListener() {
+            @Override
+            public boolean onInterceptTabClick() {
+                int num = new Random().nextInt(2);
+                Toast.makeText(mContext, "num -> " + num, Toast.LENGTH_SHORT).show();
+                return num == 1;
             }
         });
 
