@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
@@ -262,7 +263,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnInterceptTabClickListener!=null && !mOnInterceptTabClickListener.onInterceptTabClick()) {
+                if (mOnInterceptTabClickListener != null && !mOnInterceptTabClickListener.onInterceptTabClick()) {
                     int position = (Integer) v.getTag();
                     if (mCurrentTab != position) {
                         setCurrentTab(position);
@@ -809,6 +810,22 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         return tv_tab_title;
     }
 
+    /**
+     * 获取对应position的TabView
+     *
+     * @param position 对应的角标
+     * @return
+     */
+    @Nullable
+    public View getTabView(int position) {
+        if (position < 0 || position >= mTabCount) {
+            throw new IndexOutOfBoundsException("Invalid index " + position + ", size is " + mTabCount);
+        }
+
+        return mTabsContainer.getChildAt(position);
+    }
+
+
     //setter and getter
 
     // show MsgTipView
@@ -934,25 +951,14 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         this.mOnInterceptTabClickListener = listener;
     }
 
-   public interface OnInterceptTabClickListener {
+    public interface OnInterceptTabClickListener {
         /**
          * 是否拦截点击事件
+         *
          * @return
          */
         boolean onInterceptTabClick();
     }
-
-
-    /**
-     * 是否拦截tab的点击是否 默认是false
-     * 需要拦截并有自己逻辑的可以重写此方法
-     *
-     * @return
-     */
-    public boolean interceptTabClickEvent() {
-        return false;
-    }
-
 
     @Override
     protected Parcelable onSaveInstanceState() {
