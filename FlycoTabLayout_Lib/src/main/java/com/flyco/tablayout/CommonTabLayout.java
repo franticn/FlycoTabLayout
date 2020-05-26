@@ -263,7 +263,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnInterceptTabClickListener != null && !mOnInterceptTabClickListener.onInterceptTabClick()) {
+                if (mOnInterceptTabClickListener != null && !mOnInterceptTabClickListener.onInterceptTabClick(position)) {
                     int position = (Integer) v.getTag();
                     if (mCurrentTab != position) {
                         setCurrentTab(position);
@@ -957,7 +957,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
          *
          * @return
          */
-        boolean onInterceptTabClick();
+        boolean onInterceptTabClick(int position);
     }
 
     @Override
